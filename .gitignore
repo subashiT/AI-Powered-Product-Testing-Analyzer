@@ -1,0 +1,8 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.key
+git_push_debug.txt

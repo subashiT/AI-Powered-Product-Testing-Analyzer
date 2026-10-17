@@ -1,0 +1,51 @@
+*Note: The root causes, verification steps, and corrective actions detailed below are preliminary engineering hypotheses based on the provided test data. A qualified product development engineer must physically verify these recommendations in the laboratory before implementing design or manufacturing changes.*
+
+---
+
+### **Failure Analysis & Recommendations**
+
+#### **1. Sample S2**
+* **Failures Explained:** 
+  * **Power Factor (PF):** Measured **0.87** (Spec: **0.90 – 1.00**; failed by -0.03). 
+  * **Efficacy:** Measured **98.00 lm/W** (Spec: **100 – 999 lm/W**; failed by -2.00 lm/W).
+* **Plausible Technical Causes (Hypotheses):**
+  * *PF Issue:* Inadequate passive/active Power Factor Correction (PFC) stage tuning in the LED driver, or improper filter capacitor sizing causing Phase shift/harmonic distortion.
+  * *Efficacy Issue:* Electrical losses in the low-PF driver converting energy to heat rather than light, poor thermal management raising junction temperature ($T_j$), or lower-grade LED flux binning.
+* **Practical Verification Steps:**
+  1. Measure driver-only efficiency and input current harmonics (THD) using a power analyzer.
+  2. Perform thermal imaging (thermography) on the LED board and driver to measure steady-state temperature ($T_s / T_j$).
+* **Possible Corrective Actions:**
+  * Re-tune driver PFC circuit or select a driver with guaranteed higher PF (>0.95).
+  * Upgrade thermal interface material (TIM) or heatsink to reduce $T_j$.
+  * Move to a higher luminous flux LED bin.
+
+---
+
+#### **2. Sample S3**
+* **Failures Explained:**
+  * **CCT:** Measured **5800.00 K** (Spec: **6000 – 7000 K**; failed by -200 K).
+  * **CRI:** Measured **79.00** (Spec: **80 – 100**; failed by -1).
+* **Plausible Technical Causes (Hypotheses):**
+  * *CCT & CRI Issue:* Over-dispersion or incorrect mix of yellow/red phosphor over the blue LED die, causing a warmer-than-intended color shift and slight degradation in color rendering completeness ($R_a$).
+  * *Binning Issue:* Sub-tier or mislabeled LED reel lot delivered by supplier.
+* **Practical Verification Steps:**
+  1. Test bare LEDs on an integrating sphere without secondary optics or diffusers to isolate component-level performance.
+  2. Inspect supplier Lot/Reel material certificates (CoC) and spectral power distribution (SPD) plots for $R_1$–$R_8$ breakdown.
+* **Possible Corrective Actions:**
+  * Tighten incoming inspection and specify higher nominal CCT/CRI bins (e.g., target 6500 K / CRI 82 minimum).
+  * Reject/return out-of-spec component lots to the vendor.
+
+---
+
+#### **3. Sample S4**
+* **Failures Explained:**
+  * **CCT:** Measured **5600.00 K** (Spec: **6000 – 7000 K**; failed by -400 K).
+* **Plausible Technical Causes (Hypotheses):**
+  * *Phosphor Layering:* Excessive phosphor coating thickness causing strong blue-light conversion to yellow/green wavelength, shifting CCT significantly down.
+  * *Thermal Shift:* Excessive operational thermal drive causing red-shifting of the emission spectrum under thermal equilibrium.
+* **Practical Verification Steps:**
+  1. Measure instantaneous ("cold pulse" @ $25^\circ\text{C}$) CCT vs. steady-state ("hot") CCT to measure thermal CCT drift.
+  2. Audit SMT line setup to ensure correct LED reel part numbers were mounted.
+* **Possible Corrective Actions:**
+  * Adjust LED Purchasing Specification to shift the nominal CCT bin higher (e.g., 6500 K center target).
+  * Improve LED thermal path if CCT droop is confirmed to be thermal-driven.
