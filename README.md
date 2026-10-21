@@ -2,74 +2,136 @@
 
 ## Project Overview
 
-This project is developed for the MSc Emerging Topics in Information Technology (IT6070) Assignment II.
+This project has been developed as a part of the assignment II of the MSc program on Emerging Topics in Information Technology (IT6070) in SLIIT.
 
-The application assists Product Development Engineers in evaluating LED product testing reports by automatically validating measurements against predefined specifications and generating AI-assisted technical summaries.
+The application supports Product Development Engineers in reviewing LED product testing reports, automatically comparing measurements with the predefined technical specifications, identifying the parameters that are not compliant and summarising the information in the report with the use of AI.
 
 ## Technologies Used
 
-- Python
-- Pandas
-- Google Gemini API
-- CSV data processing
+Python – Application logic and automated validation
+
+Pandas – CSV data processing
+
+Google Gemini API – AI-assisted technical explanations and recommendations
+
+Matplotlib – Failure-analysis graph generation
+
+ReportLab – PDF report generation
+
+CSV – Input test data and detailed validation results
 
 ## Features
 
 **Feature 1 – Automated Test Validation**
 
-Reads LED testing data from CSV files and compares five parameters against predefined specification limits:
+The application reads the test measurements of the LEDs from a CSV file and plots five parameters and checks them against specification limits:
 
-- Input Power (W)
-- Power Factor (PF)
-- Luminous Efficacy (lm/W)
-- Correlated Color Temperature (CCT)
-- Colour Rendering Index (CRI)
+Input Power (W)
 
-Displays PASS/FAIL results and identifies non-compliant parameters.
+Power Factor (PF)
+
+Luminous Efficacy (lm/W)
+
+Correlated Colour Temperature (CCT)
+
+Colour Rendering Index (CRI)
+
+The application shows PASS and FAIL results and marks the measurements that are outside the limits.
 
 **Feature 2 – AI-Assisted Technical Reporting**
 
-Uses Google Gemini AI to generate failure summaries, possible technical causes and suggested corrective actions.
+The application connects to the Google Gemini API to produce failure summaries with AI assistance, potential technical reasons and recommended corrective actions.
 
-Generated technical summaries are saved to `report.txt`.
+When available, the technical analysis generated is saved in report.txt. When the fallback handling is in order, the application will be able to do local validation whenever the Gemini service is unavailable.
 
-## Installation
+Note: PASS/FAIL results are based on rules that are preprogrammed in the Python. Gemini does not make compliance decisions, it gives supporting explanations and recommendations.
 
-1. Install Python.
-2. Download or clone this repository.
-3. Open a terminal in the project folder.
-4. Install dependencies:
+## Software Requirements
+- Required to have Python 3.10 or newer.
 
-   `python -m pip install -r requirements.txt`
+- An operating system that is compatible with the operating system you are using, e.g. Windows, Linux or macOS.
 
-5. Set the `GEMINI_API_KEY` environment variable using your own Gemini API key.
+- Internet connection to use the Gemini API
+
+- The packages required by Python to run the project.
+
+## Installation Instructions
+1. Install Python and make sure it is available to the terminal.
+2. Clone or download this repository,
+  git clone https://github.com/subashiT/AI-Powered-Product-Testing-Analyzer.git
+3. Open a terminal in the project directory.
+4. Install the required dependencies,
+   python -m pip install -r requirements.txt
+
+## API Configuration
+- AI-assisted analysis requires a Google Gemini API key.
+- Set up the GEMINI_API_KEY environment variable with the own API key.
+      - In Windows PowerShell,
+        $env:GEMINI_API_KEY="ACTUAL_API_KEY"
+      - In Windows Git Bash,
+        export GEMINI_API_KEY="ACTUAL_API_KEY"
+
+AI analysis also depends on the availability of the configured Gemini model and the external API service.
 
 ## How to Run
+1. Make sure that the CSV file has the necessary columns and measurement data in it.
 
-Run the application:
+2. Check if the input file name is consistent with the application's set file name.
 
-`python validate.py`
+3. Run the script from the project directory,
+   python Validate.py
+   
+5. Check the validation output and the outputs generated.
 
-The script reads the CSV filename currently configured in `validate.py`, validates the measurements and attempts to generate an AI summary for any detected failures.
+The application may generate the following output files, depending on the current implementation:
 
-To test another CSV dataset, update the CSV filename in the script before running it.
+- detailed_results.csv – Detailed validation results
 
-## Test Cases
+- failure_analysis.png – Failure-analysis graph
 
-| Test | Description | Observed result |
-|---|---|---|
-| TC01 | All compliant measurements | No failures identified |
-| TC02 | Non-compliant measurements | Four failures detected; AI report generated |
-| TC03 | Invalid CSV with missing PF column | Initially caused KeyError; error handling improvement identified |
+- LED_Test_Analysis_Report.pdf – PDF report
 
-## Limitations
+- report.txt – Text-based report and AI-assisted analysis when available
 
-- AI-generated recommendations require engineering verification.
-- Input validation requires improvement.
-- AI generation depends on API configuration and availability.
+To test a different dataset, update the configured input CSV filename as required by the source code.
+
+## Testing
+The application is evaluated using three test scenarios.
+
+| Test Case | Description                                      | Expected Behaviour                        |
+|-----------|--------------------------------------------------|-------------------------------------------|
+| TC01      | All measurements comply with the specifications | All measurement checks pass               |
+| TC02      | Measurements are outside the specification limits | Non-compliant measurements are identified |
+| TC03      | A required CSV column is missing                 | A clear input-validation error is displayed |
+
+During the most recent recorded demonstration run, 25 checks were made: 20 of them passed and 5 failed. The results are dependent on the input data set and the setting of specification limits.
+
+## Known Limitations
+- Any technical explanations and recommendations generated by AI must be verified by a qualified engineer.
+
+- The Gemini analysis relies on the valid configuration of the API, internet connectivity, model availability and limits of the service.
+
+- The current implementation allows the LED parameters and specification limits set in the application to be used.
+
+- The CSV file needs to have the required columns and measurement values that are compatible.
+
+- The specification limits should be checked with the relevant product specifications prior to use in practice.
+
+- Any test data that is confidential must not be transferred to an external AI service without proper permissions and protection.
+
+- The application is intended for engineering analysis, but not for laboratory testing, regulatory assessment, and final engineering approval.
+
+## Future Improvements
+Improvements that can be made are: GUI, adding more product categories, saving test results in the past, more automation for tests, and better handling of API errors.
+
+## Repository 
+GitHub: https://github.com/subashiT/AI-Powered-Product-Testing-Analyzer
 
 ## Author
+Name: Subashi Withanage
+Student ID: MS25907520
+Programme: MSc in Information Technology
+Institution: Sri Lanka Institute of Information Technology (SLIIT)
 
-Subashi Withanage  
-MS25907520  
-MSc in Information Technology – SLIIT
+## Disclaimer
+This app was created as an educational project to showcase automated product-test validation, technical reporting and AI-based analysis. Before using any results or recommendations for product release, quality assurance or regulatory compliance, they should be independently verified.
